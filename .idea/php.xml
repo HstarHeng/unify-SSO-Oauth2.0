@@ -579,10 +579,11 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system_unify/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system_unify/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system01/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system01/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system02/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system02/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system03/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system03/vendor/autoload.php" use_configuration_file="true" />
-      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system_unify/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system_unify/vendor/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/system00/phpunit.xml" custom_loader_path="$PROJECT_DIR$/system00/vendor/autoload.php" use_configuration_file="true" />
     </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
