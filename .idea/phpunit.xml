@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="$PROJECT_DIR$/system00/tests" />
+        <option value="$PROJECT_DIR$/system01/tests/Unit" />
+        <option value="$PROJECT_DIR$/system01/tests/Feature" />
+        <option value="$PROJECT_DIR$/system_unify/tests/Unit" />
+        <option value="$PROJECT_DIR$/system_unify/tests/Feature" />
+        <option value="$PROJECT_DIR$/system02/tests/Unit" />
+        <option value="$PROJECT_DIR$/system02/tests/Feature" />
+        <option value="$PROJECT_DIR$/system03/tests/Unit" />
+        <option value="$PROJECT_DIR$/system03/tests/Feature" />
+      </list>
+    </option>
+  </component>
+</project>

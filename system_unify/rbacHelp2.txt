@@ -1,0 +1,55 @@
+关于权限验证的问题，服务器端的代码如下。我们需要在/oauth/authorize 这个路径中间件中加入我们的权限检查逻辑，而这个路径的处理基本上是在 \vendor\laravel\passport\src\Http\Controllers\AuthorizationController.php 中，很显然我们并不希望修改vendor内的文件，因此建议在 \App\Providers\AuthServiceProvider.php 中加入一个自定义的中间件：
+
+public function boot()
+{
+    $this->registerPolicies();
+
+    //...
+
+    Passport::routes();
+    //加入我们自定义的中间件，来对redirect_uri进行一次权限校验
+    Route::aliasMiddleware('check-client', CheckClient::class);
+
+}
+然后在 \routes\web.php 中，对/oauth/authorize 这个路由加入我们的自定义中间件：
+
+Route::group(['middleware' => ['web', 'check-client']], function ($router) {
+    $router->get('/oauth/authorize', [
+        'uses' => '\Laravel\Passport\Http\Controllers\AuthorizationController@authorize',
+    ])->name('passport.authorizations.authorize');
+});
+在middlewares 中新增一个 CheckClient.php 文件
+
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Support\Facades\Auth;
+use App\Permission;
+
+class CheckClient
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        $user = Auth::user();
+        $redirectUri = $request->get('redirect_uri');  // Get the requested client's redirect_uri
+        $user_role = $user->role;
+        // Assume there is redirect_uri column in permissions table and we can get the user's permission via user's role
+        $hasPermission = Permission::where('role_id', $user_role->id)->where('redirect_uri', $redirectUri)->exists();
+
+        if (!$hasPermission) {
+            // 用户无权访问此客户端
+            abort(403, 'Unauthorized action.');
+        }
+        return $next($request);
+    }
+}
+客户端选择登录后，请求到服务端oauth/authorize路由，服务端CheckClient中间件会作用于这个路由，进行一次权限检查，如果用户尝试访问一个他没有权限的 redirectUri，就会返回403响应，否则继续之后的流程。中间件的使用是 Laravel 提供来处理此类需求的最佳实践。
